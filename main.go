@@ -18,7 +18,6 @@ const (
 )
 
 type state struct {
-	Price            string
 	Cron             *cron.Cron
 	SelectedCurrency string
 	CurrencyNames    map[string]string
@@ -43,7 +42,7 @@ func (s *state) onReady() {
 	s.updatePrice()
 
 	s.Cron = cron.New()
-	s.Cron.AddFunc("@every 30s", func() { s.updatePrice() })
+	s.Cron.AddFunc("@every 10s", func() { s.updatePrice() })
 	s.Cron.Start()
 
 	for currency := range s.CurrencyNames {
@@ -60,8 +59,6 @@ func (s *state) onReady() {
 			s.SelectedCurrency = thr
 		case <-s.MenuItems[bnb].ClickedCh:
 			s.SelectedCurrency = bnb
-		default:
-			time.Sleep(100 * time.Millisecond)
 		}
 	}
 }
